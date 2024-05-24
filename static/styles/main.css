@@ -1,0 +1,170 @@
+@import url(./game-over.css);
+
+body,
+html,
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #ddd;
+    width: 4000px;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.game-board {
+    width: 100%;
+    height: 100%;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    background-image: url('../images/background.jpg');
+    background-size: 100% 100%;
+    object-fit: cover;
+}
+
+.left,
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    position: relative;
+    background-image: url(../images/stand.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: 100%;
+    z-index: 2020;
+}
+
+.right {
+    transform: scale(-1, 1);
+}
+
+#water {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 4000px;
+    height: 150px;
+    z-index: 1010;
+}
+
+#lake {
+    width: calc(100% - 200px * 2);
+    height: 100%;
+    position: relative;
+}
+
+.character {
+    width: 100px;
+    height: 100px;
+    cursor: grab;
+    background-color: transparent;
+    position: absolute;
+    z-index: 1020;
+    bottom: 150px;
+}
+
+#boat {
+    bottom: 100px;
+    width: 250px;
+    position: absolute;
+    z-index: 2020;
+}
+
+
+#person1 {
+    left: 0
+}
+
+#person2 {
+    left: 100px
+}
+
+#person3 {
+    left: 200px
+}
+
+#cannibal1 {
+    left: 300px
+}
+
+#cannibal2 {
+    left: 400px
+}
+
+#cannibal3 {
+    left: 500px
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background-color: transparent;
+}
+
+#moveBoatBtn {
+    outline: none;
+    border: 1px;
+    border-radius: 20px;
+    width: 250px;
+    height: 60px;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    z-index: 3020;
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+    cursor: pointer;
+    background-color: red;
+}
+
+#moveBoatBtn:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.boat-overflow {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 6020;
+    display: none;
+}
+
+#boat.moving~.boat-overflow {
+    display: block;
+}
