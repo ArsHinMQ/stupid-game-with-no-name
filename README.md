@@ -15,4 +15,4 @@ python app.py
 ```
 
 ### Play Online
-[stupid-game-that-does-not-have-a-name]()
+[stupid-game-that-does-not-have-a-name](http://fmaqazei.pythonanywhere.com/)
