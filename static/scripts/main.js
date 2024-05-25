@@ -14,50 +14,41 @@ let gameFinished = false
 let boatMoves = 0
 
 
-
-window.addEventListener('load', () => {
-    for (const ch of characters) {
-        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top + 8]
-
-        ch.addEventListener('mousedown', (event) => {
-            if (gameFinished) {
-                return
-            }
-            if (selectedCharacter) {
-                return
-            }
-            const img = ch.querySelector('img')
-            const pickedImgSrc = img.getAttribute('src').split('.')[0] + '-picked.png'
-            img.setAttribute('src', pickedImgSrc)
-            ch.style.left = event.pageX + 'px';
-            ch.style.top = event.pageY + 'px';
-            boardgame.prepend(ch)
-            selectedCharacter = ch
-        })
+const charcaterPicked = (event) => {
+    if (gameFinished) {
+        return
     }
-
-    for (const restartBtn of restartBtns) {
-        restartBtn.addEventListener('click', () => {
-            gameFinished = false
-            document.querySelector('#gameLoseBoard').classList.remove('show')
-            document.querySelector('#gameWinBoard').classList.remove('show')
-            for (const ch of characters) {
-                left.prepend(ch)
-                ch.style = ''
-            }
-            boat.setAttribute('data-place', 'left')
-            boat.style = ''
-        })
+    if (selectedCharacter) {
+        return
     }
-})
+    selectedCharacter = event.target.offsetParent
+    const img = selectedCharacter.querySelector('img')
+    const pickedImgSrc = img.getAttribute('src').split('.')[0] + '-picked.png'
+    img.setAttribute('src', pickedImgSrc)
+    selectedCharacter.style.left = event.pageX + 'px';
+    selectedCharacter.style.top = event.pageY + 'px';
+    boardgame.prepend(selectedCharacter)
+    document.body.style.overflowX = 'hidden'
+}
 
-boardgame.addEventListener('mouseup', () => {
+const characterPutDown = () => {
+    document.body.style.overflowX = 'auto'
     if (gameFinished) {
         return
     }
     if (selectedCharacter) {
         const id = selectedCharacter.getAttribute('id')
         const boatPlace = boat.getAttribute('data-place')
+        const chPlace = selectedCharacter.getAttribute('data-place')
+        if (chPlace === boatPlace) {
+            const boatCord = boat.getBoundingClientRect()
+            const chCord = selectedCharacter.getBoundingClientRect()
+            if (chCord.left >= boatCord.left && chCord.top >= boatCord.top && chCord.right <= boatCord.right && chCord.bottom <= boatCord.bottom) {
+                characterPutOnBoat()
+                return
+            }
+        }
+
         selectedCharacter.setAttribute('data-place', boatPlace)
         const container = document.querySelector(`.${boatPlace}`)
         container.prepend(selectedCharacter)
@@ -78,9 +69,9 @@ boardgame.addEventListener('mouseup', () => {
         selectedCharacter = null
     }
     checkGameStatus()
-})
+}
 
-boardgame.addEventListener('mousemove', (event) => {
+const characterMovedDesktop = (event) => {
     if (gameFinished) {
         return
     }
@@ -93,10 +84,21 @@ boardgame.addEventListener('mousemove', (event) => {
             selectedCharacter.style.top = event.pageY + 'px'
         }
     }
+}
 
-})
+const characterMovedMobile = (event) => {
+    if (gameFinished) {
+        return
+    }
+    if (selectedCharacter) {
+        const moveTouch = event.touches[0]
+        selectedCharacter.style.left = moveTouch.pageX + 'px'
+        selectedCharacter.style.top = moveTouch.pageY + 'px'
+    }
+}
 
-boat.addEventListener('mouseup', () => {
+const characterPutOnBoat = () => {
+    document.body.style.overflowX = 'auto'
     if (gameFinished) {
         return
     }
@@ -125,9 +127,9 @@ boat.addEventListener('mouseup', () => {
         selectedCharacter = null
         moveBoatBtn.removeAttribute('disabled')
     }
-})
+}
 
-moveBoatBtn.addEventListener('click', () => {
+const moveBoat = () => {
     if (gameFinished) {
         return
     }
@@ -167,7 +169,8 @@ moveBoatBtn.addEventListener('click', () => {
 
     }, 10)
     checkGameStatus()
-})
+}
+
 
 const checkGameStatus = () => {
     let gameLose = false
@@ -197,4 +200,57 @@ const checkGameStatus = () => {
         gameFinished = true
     }
 }
+
+const resetGame = () => {
+    gameFinished = false
+    document.querySelector('#gameLoseBoard').classList.remove('show')
+    document.querySelector('#gameWinBoard').classList.remove('show')
+    for (const ch of characters) {
+        left.prepend(ch)
+        ch.style = ''
+    }
+    boat.setAttribute('data-place', 'left')
+    boat.style = ''
+}
+
+boardgame.addEventListener('mouseup', characterPutDown)
+boardgame.addEventListener('touchend', characterPutDown)
+
+
+boardgame.addEventListener('mousemove', characterMovedDesktop)
+boardgame.addEventListener('touchmove', characterMovedMobile)
+
+boat.addEventListener('mouseup', characterPutOnBoat)
+boat.addEventListener('touchend', characterPutOnBoat)
+
+
+moveBoatBtn.addEventListener('click', moveBoat)
+
+window.addEventListener('load', () => {
+    for (const ch of characters) {
+        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top + 8]
+
+        ch.addEventListener('mousedown', charcaterPicked)
+        ch.addEventListener('touchstart', charcaterPicked)
+    }
+
+    for (const restartBtn of restartBtns) {
+        restartBtn.addEventListener('click', resetGame)
+    }
+
+    if (window.innerWidth < window.innerHeight) {
+        document.querySelector('#goLandscapeMessage').style.display = 'block'
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < window.innerHeight) {
+            document.querySelector('#goLandscapeMessage').style.display = 'block'
+        } else {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape')
+            }
+            document.querySelector('#goLandscapeMessage').style.display = 'none'
+        }
+    })
+})
 
