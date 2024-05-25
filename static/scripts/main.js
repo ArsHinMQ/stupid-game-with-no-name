@@ -228,7 +228,7 @@ moveBoatBtn.addEventListener('click', moveBoat)
 
 window.addEventListener('load', () => {
     for (const ch of characters) {
-        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top + 8]
+        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top]
 
         ch.addEventListener('mousedown', charcaterPicked)
         ch.addEventListener('touchstart', charcaterPicked)
