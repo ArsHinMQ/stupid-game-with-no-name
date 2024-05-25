@@ -1,7 +1,7 @@
 'use strict'
 
 const characters = document.querySelectorAll('.character')
-const boardgame = document.querySelector('.game-board')
+const boardgame = document.querySelector('.game-container')
 const boat = document.querySelector('#boat')
 const lake = document.querySelector('#lake')
 const moveBoatBtn = document.getElementById('moveBoatBtn')
