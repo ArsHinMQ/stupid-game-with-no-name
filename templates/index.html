@@ -4,11 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/person-1-picked.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-1.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-2.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-3.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-1-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-2-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-3-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-1.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-2.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-3.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-1-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-2-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-3-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/background.jpg') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/stand.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/boat.png') }}" as="image">
     <title>GAME</title>
 </head>
 
 <body>
+
     <div class="game-container">
         <div id="goLandscapeMessage">
             Rotate your device to landscape mode for a better experience.
@@ -35,28 +52,28 @@
 
             <div class="left">
                 <div id="person1" class="character person" data-place="left">
-                    <img draggable="false" src="images/person-1.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/person-1.png') }}" alt="">
                 </div>
                 <div id="person2" class="character person" data-place="left">
-                    <img draggable="false" src="images/person-2.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/person-2.png') }}" alt="">
                 </div>
                 <div id="person3" class="character person" data-place="left">
-                    <img draggable="false" src="images/person-3.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/person-3.png') }}" alt="">
                 </div>
 
                 <div id="cannibal1" class="character cannibal" data-place="left">
-                    <img draggable="false" src="images/cannibal-1.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/cannibal-1.p') }}ng" alt="">
                 </div>
                 <div id="cannibal2" class="character cannibal" data-place="left">
-                    <img draggable="false" src="images/cannibal-2.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/cannibal-2.p') }}ng" alt="">
                 </div>
                 <div id="cannibal3" class="character cannibal" data-place="left">
-                    <img draggable="false" src="images/cannibal-3.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/cannibal-3.p') }}ng" alt="">
                 </div>
             </div>
             <div id="lake">
                 <div id="boat" data-place="left">
-                    <img draggable="false" src="images/boat.png" alt="">
+                    <img draggable="false" src="{{ url_for('static', filename='images/boat.png') }}" alt="">
                 </div>
                 <div class="boat-overflow"></div>
             </div>
@@ -204,7 +221,7 @@
 
     <div id="gameWinBoard">
         <div class="wrapper">
-            <h1>You Win!</h1>
+            <h1>You Won!</h1>
             <button class="restart-btn">
                 Play again
             </button>
@@ -226,8 +243,8 @@
             <div class="confetti-piece"></div>
         </div>
     </div>
-    <script src="./scripts/game-over.js"></script>
-    <script src="./scripts/main.js"></script>
+    <script src="{{ url_for('static', filename='/scripts/game-over.js') }}"></script>
+    <script src="{{ url_for('static', filename='/scripts/main.js') }}"></script>
 </body>
 
 </html>
