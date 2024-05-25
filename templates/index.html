@@ -6,12 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/person-1-picked.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-1.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-2.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-3.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-1-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-2-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/person-3-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-1.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-2.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-3.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-1-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-2-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/cannibal-3-picked.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/background.jpg') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/stand.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='images/boat.png') }}" as="image">
     <title>GAME</title>
 </head>
 
 <body>
 
     <div class="game-container">
+        <div id="goLandscapeMessage">
+            Rotate your device to landscape mode for a better experience.
+        </div>
         <div id="water">
             <svg viewBox="0 -20 700 110" width="100%" height="150" preserveAspectRatio="none">
                 <path id="wave1" transform="translate(0, -20)"
