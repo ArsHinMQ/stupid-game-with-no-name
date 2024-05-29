@@ -9,13 +9,31 @@ const restartBtns = document.querySelectorAll('.restart-btn')
 const left = document.querySelector('.left')
 const right = document.querySelector('.right')
 const loseReason = document.querySelector('.lose-reason')
-const width = window.innerWidth
-const height = window.innerHeight
+let width = window.innerWidth
+let height = window.innerHeight
 let selectedCharacter
 let selectedCharacterInitCord = {}
 let gameFinished = false
 let boatMoves = 0
 
+const init = () => {
+    width = window.innerWidth
+    height = window.innerHeight
+    for (const ch of characters) {
+        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top]
+
+        ch.addEventListener('mousedown', charcaterPicked)
+        ch.addEventListener('touchstart', charcaterPicked)
+    }
+
+    for (const restartBtn of restartBtns) {
+        restartBtn.addEventListener('click', resetGame)
+    }
+
+    if (window.innerWidth < window.innerHeight) {
+        document.querySelector('#goLandscapeMessage').style.display = 'block'
+    }
+}
 
 const charcaterPicked = (event) => {
     if (gameFinished) {
@@ -24,7 +42,11 @@ const charcaterPicked = (event) => {
     if (selectedCharacter) {
         return
     }
-    selectedCharacter = Object.assign(event.target.offsetParent)
+    if (event.target.offsetParent.getAttribute('data-place') !== boat.getAttribute('data-place') && event.target.offsetParent.getAttribute('data-place') !== 'boat') {
+        return
+    }
+
+    selectedCharacter = event.target.offsetParent
     const img = selectedCharacter.querySelector('img')
     const pickedImgSrc = img.getAttribute('src').split('.')[0] + '-picked.png'
     img.setAttribute('src', pickedImgSrc)
@@ -252,21 +274,7 @@ boat.addEventListener('touchend', characterPutOnBoat)
 moveBoatBtn.addEventListener('click', moveBoat)
 
 window.addEventListener('load', () => {
-    for (const ch of characters) {
-        selectedCharacterInitCord[ch.getAttribute('id')] = [ch.getBoundingClientRect().left, ch.getBoundingClientRect().top]
-
-        ch.addEventListener('mousedown', charcaterPicked)
-        ch.addEventListener('touchstart', charcaterPicked)
-    }
-
-    for (const restartBtn of restartBtns) {
-        restartBtn.addEventListener('click', resetGame)
-    }
-
-    if (window.innerWidth < window.innerHeight) {
-        document.querySelector('#goLandscapeMessage').style.display = 'block'
-    }
-
+    init()
     window.addEventListener('resize', () => {
         if (window.innerWidth < window.innerHeight) {
             document.querySelector('#goLandscapeMessage').style.display = 'block'
@@ -276,6 +284,7 @@ window.addEventListener('load', () => {
             }
             document.querySelector('#goLandscapeMessage').style.display = 'none'
         }
+        init()
     })
 })
 
