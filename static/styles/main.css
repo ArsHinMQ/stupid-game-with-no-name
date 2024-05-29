@@ -90,7 +90,7 @@ body {
 
 @media(max-width: 900px) {
     #water {
-        bottom: -100px
+        bottom: -50px
     }
 }
 
