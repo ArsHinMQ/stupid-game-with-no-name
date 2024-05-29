@@ -8,6 +8,9 @@ const moveBoatBtn = document.getElementById('moveBoatBtn')
 const restartBtns = document.querySelectorAll('.restart-btn')
 const left = document.querySelector('.left')
 const right = document.querySelector('.right')
+const loseReason = document.querySelector('.lose-reason')
+const width = window.innerWidth
+const height = window.innerHeight
 let selectedCharacter
 let selectedCharacterInitCord = {}
 let gameFinished = false
@@ -21,7 +24,7 @@ const charcaterPicked = (event) => {
     if (selectedCharacter) {
         return
     }
-    selectedCharacter = event.target.offsetParent
+    selectedCharacter = Object.assign(event.target.offsetParent)
     const img = selectedCharacter.querySelector('img')
     const pickedImgSrc = img.getAttribute('src').split('.')[0] + '-picked.png'
     img.setAttribute('src', pickedImgSrc)
@@ -92,8 +95,16 @@ const characterMovedMobile = (event) => {
     }
     if (selectedCharacter) {
         const moveTouch = event.touches[0]
-        selectedCharacter.style.left = moveTouch.pageX + 'px'
-        selectedCharacter.style.top = moveTouch.pageY + 'px'
+        let x = moveTouch.pageX
+        let y = moveTouch.pageY
+        if (x + selectedCharacter.getBoundingClientRect().width > width) {
+            x = width - selectedCharacter.getBoundingClientRect().width
+        }
+        if (y > height) {
+            y = height
+        }
+        selectedCharacter.style.left = x + 'px'
+        selectedCharacter.style.top = y + 'px'
     }
 }
 
@@ -178,10 +189,24 @@ const checkGameStatus = () => {
     const boatPlace = boat.getAttribute('data-place')
     if (left.querySelectorAll('.cannibal').length > left.querySelectorAll('.person').length && left.querySelectorAll('.person').length !== 0) {
         if (boatPlace === 'right') {
+            loseReason.innerHTML = "The number of cannibals on the left side is more than people."
             gameLose = true
         }
     } else if (right.querySelectorAll('.cannibal').length > right.querySelectorAll('.person').length && right.querySelectorAll('.person').length !== 0) {
+        loseReason.innerHTML = "The number of cannibals on the right side is more than people."
         if (boatPlace === 'left') {
+            gameLose = true
+        }
+    }
+
+    if (boatPlace === 'right') {
+        if (boat.querySelectorAll('.cannibal').length + right.querySelectorAll('.cannibal').length > boat.querySelectorAll('.person').length + right.querySelectorAll('.person').length && boat.querySelectorAll('.person').length + right.querySelectorAll('.person').length !== 0) {
+            loseReason.innerHTML = "The number of cannibals on the right side is more than people."
+            gameLose = true
+        }
+    } else {
+        if (boat.querySelectorAll('.cannibal').length + left.querySelectorAll('.cannibal').length > boat.querySelectorAll('.person').length + left.querySelectorAll('.person').length && boat.querySelectorAll('.person').length + left.querySelectorAll('.person').length !== 0) {
+            loseReason.innerHTML = "The number of cannibals on the left side is more than people."
             gameLose = true
         }
     }
