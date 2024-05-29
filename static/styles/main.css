@@ -88,6 +88,12 @@ body {
     z-index: 2020;
 }
 
+@media(min-width: 900px) {
+    #water {
+        bottom: -100px
+    }
+}
+
 #lake {
     width: calc(100% - 200px * 2);
     height: 100%;
