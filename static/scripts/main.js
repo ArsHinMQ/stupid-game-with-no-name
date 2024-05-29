@@ -284,7 +284,7 @@ window.addEventListener('load', () => {
             }
             document.querySelector('#goLandscapeMessage').style.display = 'none'
         }
-        init()
+        location.reload()
     })
 })
 
