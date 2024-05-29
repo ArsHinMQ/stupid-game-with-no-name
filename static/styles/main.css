@@ -88,7 +88,7 @@ body {
     z-index: 2020;
 }
 
-@media(min-width: 900px) {
+@media(max-width: 900px) {
     #water {
         bottom: -100px
     }
